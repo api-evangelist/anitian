@@ -1,0 +1,98 @@
+generated: '2026-08-06'
+method: probed
+source: https://securecloud.anitian.com/api/auth/providers
+name: Anitian authentication profile
+summary: >-
+  Anitian publishes no developer authentication documentation, no API key model, and
+  no OAuth scope reference. Everything below was observed by probing the live hosts
+  anonymously. The SecureCloud / FedFlex console is a Next.js application using
+  NextAuth with two federated OAuth/OIDC identity providers; every application and
+  API path behind it redirects unauthenticated callers to the sign-in page. The
+  FedFlex copilot WebSocket API is fronted by an AWS API Gateway custom authorizer.
+
+hosts:
+
+  - host: securecloud.anitian.com
+    surface: Anitian SecureCloud / FedFlex console + platform API
+    model: federated-oauth-session
+    session:
+      framework: NextAuth.js
+      cookies:
+        - name: __Host-next-auth.csrf-token
+          attributes: [Path=/, HttpOnly, Secure, 'SameSite=Lax']
+        - name: __Secure-next-auth.callback-url
+          attributes: [Path=/, HttpOnly, Secure, 'SameSite=Lax']
+      csrf_endpoint: https://securecloud.anitian.com/api/auth/csrf
+      session_endpoint: https://securecloud.anitian.com/api/auth/session
+    identity_providers:
+      - id: okta
+        name: Okta
+        type: oauth
+        signin_url: https://securecloud.anitian.com/api/auth/signin/okta
+        callback_url: https://securecloud.anitian.com/api/auth/callback/okta
+      - id: cognito
+        name: Amazon Cognito
+        type: oauth
+        signin_url: https://securecloud.anitian.com/api/auth/signin/cognito
+        callback_url: https://securecloud.anitian.com/api/auth/callback/cognito
+    anonymous_endpoints:
+      - path: /api/health
+        status: 200
+        body: '{"status":"ok","version":""}'
+      - path: /api/auth/providers
+        status: 200
+        note: enumerates the two OAuth providers
+      - path: /api/auth/csrf
+        status: 200
+      - path: /api/auth/session
+        status: 200
+        body: '{}'
+    gated_behaviour:
+      redirect: 307 -> /auth/signin?callbackUrl=<original path>
+      note: >-
+        Applies to every other path probed, including /api, /openapi.json,
+        /swagger.json, /api-docs, /docs, /redoc, /graphql, /mcp, /llms.txt and
+        every /.well-known/* path. The console answers 307 rather than 401/403,
+        so no WWW-Authenticate challenge and no OAuth metadata is exposed.
+
+  - host: copilot.anitian.com
+    surface: Anitian FedFlex Copilot WebSocket API
+    model: apigateway-custom-authorizer
+    infrastructure: AWS API Gateway (WebSocket), us-west-2
+    observed:
+      - probe: plain HTTPS GET on any path
+        status: 426
+        headers: 'sec-websocket-version: 13'
+      - probe: WebSocket upgrade handshake (Connection/Upgrade/Sec-WebSocket-Key)
+        status: 401
+        body: '{"message": "Unauthorized", "connectionId": "...", "requestId": "..."}'
+        note: >-
+          $connect route rejected. Credential form (query-string token, header,
+          or IAM SigV4) is not documented anywhere public.
+
+not_found:
+  - what: OpenID Connect discovery
+    probed:
+      - url: https://www.anitian.com/.well-known/openid-configuration
+        status: 404
+      - url: https://securecloud.anitian.com/.well-known/openid-configuration
+        status: 307
+  - what: OAuth authorization-server metadata (RFC 8414)
+    probed:
+      - url: https://www.anitian.com/.well-known/oauth-authorization-server
+        status: 404
+      - url: https://securecloud.anitian.com/.well-known/oauth-authorization-server
+        status: 307
+  - what: OAuth protected-resource metadata (RFC 9728)
+    probed:
+      - url: https://securecloud.anitian.com/.well-known/oauth-protected-resource
+        status: 307
+  - what: API keys, personal access tokens, or a documented machine-to-machine flow
+    note: >-
+      None documented. Anitian's own FedRAMP 20x README states "an API is available
+      for auditors to download evidence and integrate it into their own systems",
+      but neither the endpoint nor its credential model is published.
+
+x-evidence:
+  fetched: '2026-08-06'
+  method: anonymous HTTP probes, no credentials used

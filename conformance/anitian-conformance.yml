@@ -1,0 +1,182 @@
+generated: '2026-08-06'
+method: searched
+source: https://github.com/anitianinc/anitian-fedflex-fedramp-20x
+name: Anitian conformance and compliance posture
+summary: >-
+  Anitian is a compliance-automation vendor, so its conformance surface is the
+  regulatory frameworks it operates its own platform against and sells readiness
+  for — not API-protocol conformance. The strongest evidence is first-party and
+  machine-readable: Anitian published its complete FedRAMP 20x Phase One pilot
+  submission — a KSI-aligned assessment file, the data schema for it, and a signed
+  3PAO attestation letter from A-LIGN — in a public GitHub repository.
+
+conformance:
+
+  - id: fedramp-20x
+    name: FedRAMP 20x (Phase One pilot, Low baseline)
+    conforms: true
+    status: in-process
+    evidence:
+      summary: >-
+        Anitian submitted a machine-readable FedRAMP 20x Phase One pilot package for
+        the FedFlex platform and published it publicly. The assessment file asserts
+        51 Key Security Indicators across 10 KSI families, backed by 97 evidence
+        objects (39 collected automatically, 58 manually). FedFlex reached "In Process"
+        status on the FedRAMP Marketplace on 2025-07-30.
+      artifacts:
+        - file: conformance/anitian-fedramp-20x-assessment.json
+          description: Final public assessment package (framework "FedRAMP 20x", 51 controls)
+          source: https://github.com/anitianinc/anitian-fedflex-fedramp-20x/blob/main/Anitian_20x_Attestation_Official.json
+          http_status: 200
+        - file: conformance/anitian-fedramp-20x-schema.json
+          description: Anitian's own data schema for the machine-readable assessment package
+          source: https://github.com/anitianinc/anitian-fedflex-fedramp-20x/blob/main/Anitian_20x_Schema.json
+          http_status: 200
+        - file: null
+          description: >-
+            A-LIGN 3PAO attestation letter (signed PDF). Not mirrored here — binary
+            document, read it at the source.
+          source: https://github.com/anitianinc/anitian-fedflex-fedramp-20x/blob/main/Anitian_20x_Attestation_Letter-Signed.pdf
+          http_status: 200
+      ksi_families:
+        - id: KSI-CED
+          name: Cybersecurity Education
+          controls: 2
+        - id: KSI-CMT
+          name: Change Management
+          controls: 5
+        - id: KSI-CNA
+          name: Cloud Native Architecture
+          controls: 7
+        - id: KSI-IAM
+          name: Identity and Access Management
+          controls: 6
+        - id: KSI-INR
+          name: Incident Response
+          controls: 3
+        - id: KSI-MLA
+          name: Monitoring, Logging, and Auditing
+          controls: 6
+        - id: KSI-PIY
+          name: Policy and Inventory
+          controls: 7
+        - id: KSI-RPL
+          name: Recovery Planning
+          controls: 4
+        - id: KSI-SVC
+          name: Service Configuration
+          controls: 7
+        - id: KSI-TPR
+          name: Third-Party Information Resources
+          controls: 4
+      assessor:
+        name: A-LIGN
+        role: 3PAO
+        source: https://github.com/anitianinc/anitian-fedflex-fedramp-20x
+
+  - id: fedramp
+    name: FedRAMP (Low / Moderate / High)
+    conforms: true
+    evidence:
+      summary: >-
+        FedRAMP authorization is Anitian's core product. FedFlex Starter targets
+        FedRAMP Low via the sponsorless 20x pilot; FedFlex Comprehensive targets
+        Moderate and High with continuous monitoring. Anitian ships pre-engineered,
+        FedRAMP-aligned landing zones on AWS (including GovCloud) and Azure.
+      docs:
+        - https://www.anitian.com/fedramp-compliance/
+        - https://www.anitian.com/platform-fedflex-starter/
+        - https://www.anitian.com/platform-fedflex-comprehensive/
+        - https://www.anitian.com/solutions/aws-fedramp-authorized-services/
+        - https://www.anitian.com/solutions/azure-fedramp-authorization/
+
+  - id: nist-800-53
+    name: NIST SP 800-53 security controls
+    conforms: true
+    evidence:
+      summary: >-
+        FedFlex maps automated evidence collection to NIST 800-53 controls and to the
+        FedRAMP 20x KSIs; Anitian states 143 rules are mapped to KSIs and evaluated
+        automatically.
+      docs:
+        - https://www.anitian.com/fedflex-platform-overview/
+        - https://github.com/anitianinc/anitian-fedflex-fedramp-20x
+
+  - id: iso-27001
+    name: ISO/IEC 27001
+    conforms: true
+    scope: product-capability
+    evidence:
+      summary: >-
+        Anitian sells ISO 27001 compliance automation through SecureCloud — a
+        "ready once, audit many" pre-configured cloud environment. This is a
+        marketed capability of the product, not a published certificate for
+        Anitian's own ISMS; no certificate or trust center was found.
+      docs:
+        - https://www.anitian.com/securecloud-for-compliance-automation/iso-27001/
+
+  - id: cmmc
+    name: CMMC
+    conforms: true
+    scope: product-capability
+    evidence:
+      summary: >-
+        Anitian markets CMMC compliance alongside FedRAMP as an outcome its
+        pre-engineered platform delivers.
+      docs:
+        - https://www.anitian.com/about/
+        - https://www.anitian.com/commercial-compliance/
+
+  - id: stig
+    name: DISA STIG hardening
+    conforms: true
+    evidence:
+      summary: >-
+        The FedRAMP 20x assessment records Kubernetes STIGs and kube-bench among the
+        systems evidence is collected from, and Anitian publishes a public
+        `project-stig` repository testing Azure ARM / Image Builder / DSC for
+        STIG-hardened resources.
+      docs:
+        - https://github.com/anitianinc/project-stig
+      artifacts:
+        - conformance/anitian-fedramp-20x-assessment.json
+
+  # --- API / protocol conformance: nothing to assert ---
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence:
+      summary: >-
+        No OpenAPI or Swagger document is published anywhere. Probed
+        /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+        /api/openapi.json, /api-docs, /docs and /redoc against
+        www.anitian.com (404), securecloud.anitian.com (307 to /auth/signin)
+        and copilot.anitian.com (426).
+
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: partial
+    evidence:
+      summary: >-
+        The SecureCloud console federates sign-in to two OAuth/OIDC identity
+        providers (Okta and Amazon Cognito), enumerated anonymously at
+        /api/auth/providers. No authorization-server metadata, scope reference,
+        or developer-facing OAuth flow is published — the OAuth is for console
+        sign-in, not for third-party API authorization.
+      see: authentication/anitian-authentication.yml
+
+x-notes:
+  - >-
+    Anitian's published sample file `Anitian_Evidence_Objects.json` is not valid
+    JSON — it carries trailing commas inside `controlFamily` objects and fails
+    `json.load` at line 10. It is not mirrored into this repo for that reason. The
+    official assessment file and the schema both parse cleanly.
+  - >-
+    `auditStatus` is present in Anitian's schema (COMPLIANT / PARTIAL /
+    NON_COMPLIANT, auditor name, signed hash) but is null on every control in the
+    published public assessment file — the auditor sign-off values were stripped
+    from the public copy.
+  - >-
+    Anitian merged with Arkenstone Defense in April 2026. arkenstonedefense.com
+    returned HTTP 403 to every probe from this run, so no conformance claim was
+    read from the acquirer's own surface.

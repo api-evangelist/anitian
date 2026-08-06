@@ -42,5 +42,32 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Anitian is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Anitian, Inc. is a cloud security and compliance automation company (Portland, Oregon) that helps
+SaaS providers reach and maintain U.S. federal compliance. Its **FedFlex** platform automates the
+FedRAMP lifecycle — pre-engineered AWS and Azure landing zones, AI-driven evidence collection mapped
+to FedRAMP 20x Key Security Indicators (KSIs) and NIST 800-53 controls, SSP generation, an auditor
+view for 3PAOs, and continuous monitoring. Anitian merged with **Arkenstone Defense** in April 2026.
+
+- Website: https://www.anitian.com/
+- FedFlex platform: https://www.anitian.com/fedflex-platform-overview/
+- GitHub: https://github.com/anitianinc
+
+## API surface
+
+Anitian publishes **no OpenAPI, GraphQL SDL, AsyncAPI, SDK, CLI, or developer portal**. Two live API
+surfaces were found and both are gated:
+
+| Surface | Host | Observed |
+|---|---|---|
+| SecureCloud / FedFlex Platform API | `securecloud.anitian.com/api` | 307 → `/auth/signin` on every path except `/api/health` and NextAuth `/api/auth/*`; federated to Okta + Amazon Cognito |
+| FedFlex Copilot WebSocket API | `copilot.anitian.com` | 426 Upgrade Required over HTTP; WebSocket `$connect` returns 401 Unauthorized (AWS API Gateway, us-west-2) |
+
+Anitian's own FedRAMP 20x README states *"an API is available for auditors to download evidence and
+integrate it into their own systems"* — but neither the endpoint nor its credential model is
+published.
+
+## What Anitian does publish machine-readably
+
+Its complete **FedRAMP 20x Phase One pilot submission** is public on GitHub — a KSI-aligned
+assessment file (51 controls across 10 KSI families, 97 evidence objects), the data schema for it,
+and a signed 3PAO attestation letter from A-LIGN. Mirrored here under `conformance/`.

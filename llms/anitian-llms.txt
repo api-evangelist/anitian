@@ -1,0 +1,89 @@
+# Anitian
+
+> generated: 2026-08-06
+> method: generated
+> source: all/anitian/apis.yml + repo artifacts (Anitian publishes no llms.txt; https://www.anitian.com/llms.txt returned 404)
+
+Anitian, Inc. is a cloud security and compliance automation company (Portland, Oregon)
+that helps SaaS providers reach and maintain U.S. federal compliance. Its FedFlex
+platform automates the FedRAMP lifecycle: pre-engineered AWS and Azure landing zones,
+AI-driven evidence collection mapped to FedRAMP 20x Key Security Indicators (KSIs) and
+NIST 800-53 controls, SSP generation, an auditor view for 3PAOs, and continuous
+monitoring. Anitian merged with Arkenstone Defense in April 2026 and now trades as
+"Anitian, powered by Arkenstone".
+
+## What an agent should know first
+
+- **There is no public API contract.** No OpenAPI, Swagger, GraphQL SDL, AsyncAPI,
+  Postman collection, SDK, or CLI is published anywhere. Do not attempt to construct
+  one.
+- **The platform API exists but is customer- and auditor-only.** Anitian's own FedRAMP
+  20x README states "an API is available for auditors to download evidence and
+  integrate it into their own systems." Every path under
+  `https://securecloud.anitian.com/` returns HTTP 307 to `/auth/signin`, except
+  `/api/health` and the NextAuth `/api/auth/*` endpoints.
+- **Sign-in is federated.** The console federates to Okta and Amazon Cognito. There is
+  no API key, no documented machine-to-machine flow, and no OAuth scope reference.
+- **The richest machine-readable thing Anitian publishes is compliance evidence, not
+  an API.** Its complete FedRAMP 20x Phase One pilot package is public on GitHub.
+
+## Products
+
+- FedFlex Starter — FedRAMP Low via the sponsorless FedRAMP 20x pilot program: https://www.anitian.com/platform-fedflex-starter/
+- FedFlex Comprehensive — FedRAMP Moderate / High with continuous monitoring: https://www.anitian.com/platform-fedflex-comprehensive/
+- FedFlex platform overview: https://www.anitian.com/fedflex-platform-overview/
+- SecureCloud for Compliance Automation (ISO 27001, commercial frameworks): https://www.anitian.com/commercial-compliance/
+- SecOps / managed security monitoring: https://www.anitian.com/secops/
+- Managed PaaS: https://www.anitian.com/solutions/managed-paas/
+
+## API surfaces (both gated)
+
+- Anitian SecureCloud / FedFlex Platform API — https://securecloud.anitian.com/api
+  Next.js + NextAuth. Anonymous: `/api/health` (200), `/api/auth/providers` (200),
+  `/api/auth/csrf` (200), `/api/auth/session` (200). Everything else: 307 to
+  `/auth/signin`.
+- Anitian FedFlex Copilot WebSocket API — https://copilot.anitian.com
+  AWS API Gateway WebSocket (us-west-2). Plain HTTP returns 426 Upgrade Required;
+  the WebSocket `$connect` route returns 401 Unauthorized. Protocol undocumented.
+
+## Machine-readable artifacts Anitian publishes
+
+- FedRAMP 20x Phase One pilot submission: https://github.com/anitianinc/anitian-fedflex-fedramp-20x
+  - Assessment package (framework "FedRAMP 20x", 51 KSI controls across 10 families,
+    97 evidence objects — 39 automated, 58 manual)
+  - Data schema for the machine-readable assessment package
+  - Signed 3PAO attestation letter from A-LIGN (PDF)
+  - Note: the sample file `Anitian_Evidence_Objects.json` is not valid JSON
+    (trailing commas).
+- GitHub organization: https://github.com/anitianinc — mostly infrastructure tooling
+  (Puppet/Ansible/CloudFormation for Trend Micro Deep Security, a Logstash CloudWatch
+  input plugin, STIG testing). None of it is a client library for an Anitian API.
+
+## Compliance posture
+
+- FedRAMP 20x — "In Process" on the FedRAMP Marketplace since 2025-07-30; 3PAO A-LIGN.
+- FedRAMP Low / Moderate / High, NIST SP 800-53, CMMC, ISO 27001, DISA STIG hardening.
+- No security.txt, no vulnerability disclosure policy, no trust center, and no status
+  page were found on any host.
+
+## Company
+
+- Website: https://www.anitian.com/
+- About: https://www.anitian.com/about/
+- Leadership: https://www.anitian.com/leadership/
+- Partner program: https://www.anitian.com/partner-program/
+- Blog: https://www.anitian.com/all-posts/ (RSS: https://www.anitian.com/feed/)
+- Resources / case studies: https://www.anitian.com/resources/case-studies/
+- Contact: https://www.anitian.com/contact/
+- Demo request: https://www.anitian.com/demo-request/
+- AWS Marketplace seller profile: https://aws.amazon.com/marketplace/seller-profile?id=31e28297-b7d4-416f-b454-59f1d0aa8865
+- Privacy policy: https://www.anitian.com/privacy-policy/
+- Marketplace EULA: https://www.anitian.com/marketplace-eula/
+- Acquirer: Arkenstone Defense (https://arkenstonedefense.com/ — returned HTTP 403 to
+  this profile's probes)
+
+## Optional
+
+- Repository artifacts: conformance/anitian-conformance.yml,
+  authentication/anitian-authentication.yml, well-known/anitian-well-known.yml,
+  security/anitian-domain-security.yml

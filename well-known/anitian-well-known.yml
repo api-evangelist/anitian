@@ -1,0 +1,133 @@
+generated: '2026-08-06'
+method: probed
+source: anonymous HTTP probes of every Anitian host found via DNS and certificate transparency
+name: Anitian .well-known probe results
+summary: >-
+  Anitian publishes no /.well-known/ documents on any reachable host. Recorded here
+  as a negative result with evidence so re-runs do not re-guess. No `WellKnown`,
+  `SecurityTxt` or `APICatalog` pointer is wired into apis.yml, because nothing was
+  found — a documented miss must not be credited as a hit.
+
+found: []
+
+hosts_probed:
+  - host: www.anitian.com
+    note: WordPress marketing site; every miss returns a 404 HTML page (~57KB), not a soft 200.
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+      - path: /openapi.json
+        status: 404
+      - path: /swagger.json
+        status: 404
+      - path: /api-docs
+        status: 404
+
+  - host: securecloud.anitian.com
+    note: >-
+      Next.js console. Every /.well-known/* path returns 307 to
+      /auth/signin?callbackUrl=<path> — gated, not absent.
+    probes:
+      - path: /.well-known/security.txt
+        status: 307
+      - path: /.well-known/openid-configuration
+        status: 307
+      - path: /.well-known/oauth-authorization-server
+        status: 307
+      - path: /.well-known/oauth-protected-resource
+        status: 307
+      - path: /.well-known/agent-card.json
+        status: 307
+      - path: /.well-known/agent.json
+        status: 307
+      - path: /.well-known/api-catalog
+        status: 307
+
+  - host: copilot.anitian.com
+    note: AWS API Gateway WebSocket API; every HTTP path returns 426 Upgrade Required.
+    probes:
+      - path: /.well-known/security.txt
+        status: 426
+      - path: /.well-known/agent-card.json
+        status: 426
+      - path: /.well-known/agent.json
+        status: 426
+      - path: /.well-known/api-catalog
+        status: 426
+
+  - host: arkenstonedefense.com
+    note: >-
+      Acquirer (Anitian merged with Arkenstone Defense, April 2026). The origin
+      returned HTTP 403 to every request from this run, including the site root,
+      so nothing could be read there.
+    probes:
+      - path: /
+        status: 403
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /llms.txt
+        status: 403
+
+hosts_discovered_but_unresolvable:
+  note: >-
+    Found in certificate transparency logs for *.anitian.com but with no current
+    DNS A/CNAME record, so they could not be probed.
+  hosts:
+    - api.fedramp-compliance.anitian.com
+    - fedramp-compliance.anitian.com
+    - copilot.fedramp-compliance.anitian.com
+    - automator.anitian.com
+    - support.anitian.com
+    - sherlock.anitian.com
+    - siem.anitian.com
+    - keycloak.dev.anitian.com
+
+x-notes:
+  - >-
+    TRAP for re-runs: www.anitian.com runs WordPress with
+    `redirect_guess_404_permalink` enabled, so a single-word path that does not
+    exist is 302'd to a fuzzy-matched blog post and answers 200. /security 200s
+    to a podcast episode, /trust 200s to a 2019 blog post, /compliance 200s to a
+    product brief. A 200 on those paths is NOT a security policy, trust center,
+    or compliance page. The control path /this-path-does-not-exist-control
+    returns 404, and /responsible-disclosure, /vulnerability-disclosure and
+    /security-policy all return 404 — Anitian publishes none of them. The
+    automated security-programs probe produced a vulnerability-disclosure and a
+    trust-center file from these fuzzy hits; both were verified false and deleted.
+
+x-evidence:
+  fetched: '2026-08-06'
+  discovery: https://crt.sh/?q=%25.anitian.com&output=json
+  fuzzy_redirect_control:
+    - url: https://www.anitian.com/security
+      status: 200
+      resolved_to: https://www.anitian.com/security-advocacy-in-the-cloud-with-jacob-ansari-from-schellman/
+    - url: https://www.anitian.com/trust
+      status: 200
+      resolved_to: https://www.anitian.com/trust-the-biggest-security-vulnerability-in-the-cloud/
+    - url: https://www.anitian.com/responsible-disclosure
+      status: 404
+    - url: https://www.anitian.com/security-policy
+      status: 404
+    - url: https://www.anitian.com/this-path-does-not-exist-control
+      status: 404
