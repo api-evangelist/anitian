@@ -77,6 +77,10 @@ apis:
   humanURL: https://www.anitian.com/fedflex-platform-overview/
   baseURL: https://copilot.anitian.com
   tags:
+  - Artificial Intelligence
+  - Agents
+  - Compliance
+  tags_raw:
   - AI
   - Agents
   - Compliance
