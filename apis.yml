@@ -12,6 +12,17 @@ description: 'Anitian, Inc. is a Portland, Oregon cloud security and compliance 
   its data schema, and a signed 3PAO attestation from A-LIGN — publicly on GitHub. Anitian
   merged with Arkenstone Defense in April 2026 and now operates as "Anitian, powered by
   Arkenstone".'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.anitian.com/wp-content/uploads/2023/08/Anitian-blue-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/anitian/refs/heads/main/apis.yml
 x-type: company
