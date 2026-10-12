@@ -1,0 +1,25 @@
+generated: '2026-10-13'
+method: searched
+checked:
+- https://aws.amazon.com/marketplace/
+marketplace_apps: []
+edges:
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=31e28297-b7d4-416f-b454-59f1d0aa8865
+  listing_count: 6
+  apps:
+  - FedRAMP Comprehensive Solution FedRAMP Moderate (Commercial)
+  - FedRAMP Accelerated Platinum Solution
+  - FedRAMP Insights
+  - FedRAMP Comprehensive Solution FedRAMP Moderate (GovCloud)
+  - FedRAMP Prep Technical Readiness Assessment
+  seller_name: Anitian
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
