@@ -64,32 +64,92 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Anitian, Inc. is a cloud security and compliance automation company (Portland, Oregon) that helps
-SaaS providers reach and maintain U.S. federal compliance. Its **FedFlex** platform automates the
-FedRAMP lifecycle — pre-engineered AWS and Azure landing zones, AI-driven evidence collection mapped
-to FedRAMP 20x Key Security Indicators (KSIs) and NIST 800-53 controls, SSP generation, an auditor
-view for 3PAOs, and continuous monitoring. Anitian merged with **Arkenstone Defense** in April 2026.
+Anitian, Inc. is a Portland, Oregon cloud security and compliance automation company that helps SaaS providers reach and maintain U.S. federal compliance. Its FedFlex platform automates the FedRAMP lifecycle — pre-engineered AWS and Azure landing zones, AI-driven evidence collection mapped to FedRAMP 20x Key Security Indicators (KSIs) and NIST 800-53 controls, SSP generation, an auditor view for 3PAOs, and continuous monitoring — sold as FedFlex Starter (FedRAMP Low via the sponsorless 20x pilot) and FedFlex Comprehensive (Moderate/High). Anitian also sells SecureCloud compliance automation for ISO 27001, CMMC and commercial frameworks, plus managed SecOps. The company published a machine-readable FedRAMP 20x Phase One pilot package — a KSI-aligned assessment file, its data schema, and a signed 3PAO attestation from A-LIGN — publicly on GitHub. Anitian merged with Arkenstone Defense in April 2026 and now operates as "Anitian, powered by Arkenstone".
 
-- Website: https://www.anitian.com/
-- FedFlex platform: https://www.anitian.com/fedflex-platform-overview/
-- GitHub: https://github.com/anitianinc
+**Areas:** Company · Security · Compliance · Cloud · Governance · FedRAMP · Government · Risk Management · Audit · Automation
 
-## API surface
+## Anitian on APIs.io
 
-Anitian publishes **no OpenAPI, GraphQL SDL, AsyncAPI, SDK, CLI, or developer portal**. Two live API
-surfaces were found and both are gated:
+Everything profiled for Anitian is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/anitian/](https://apis.io/providers/anitian/)** — or go straight to one of the APIs or properties below.
 
-| Surface | Host | Observed |
-|---|---|---|
-| SecureCloud / FedFlex Platform API | `securecloud.anitian.com/api` | 307 → `/auth/signin` on every path except `/api/health` and NextAuth `/api/auth/*`; federated to Okta + Amazon Cognito |
-| FedFlex Copilot WebSocket API | `copilot.anitian.com` | 426 Upgrade Required over HTTP; WebSocket `$connect` returns 401 Unauthorized (AWS API Gateway, us-west-2) |
+### APIs (2)
 
-Anitian's own FedRAMP 20x README states *"an API is available for auditors to download evidence and
-integrate it into their own systems"* — but neither the endpoint nor its credential model is
-published.
+- [Anitian SecureCloud / FedFlex Platform API](https://apis.io/apis/anitian/securecloud-platform/) — The HTTP API behind the Anitian SecureCloud and FedFlex console at securecloud.anitian.com. Anitian documents (in its FedRAMP 20x pilot README) that "an API…
+- [Anitian FedFlex Copilot WebSocket API](https://apis.io/apis/anitian/fedflex-copilot/) — An AWS API Gateway WebSocket API fronting the FedFlex agentic-AI copilot. Every plain HTTP request to copilot.anitian.com returns HTTP 426 Upgrade Required…
 
-## What Anitian does publish machine-readably
+### Published properties
 
-Its complete **FedRAMP 20x Phase One pilot submission** is public on GitHub — a KSI-aligned
-assessment file (51 controls across 10 KSI families, 97 evidence objects), the data schema for it,
-and a signed 3PAO attestation letter from A-LIGN. Mirrored here under `conformance/`.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Anitian Authentication](https://apis.io/security/anitian/anitian-authentication/)
+- [Anitian Domain Security](https://apis.io/security/anitian/anitian-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.anitian.com/)
+- [Pricing](https://aws.amazon.com/marketplace/seller-profile?id=31e28297-b7d4-416f-b454-59f1d0aa8865)
+- [Sign up](https://securecloud.anitian.com/auth/signin)
+- [Support](https://www.anitian.com/contact/)
+- [Blog](https://www.anitian.com/all-posts/)
+- [Terms of service](https://www.anitian.com/marketplace-eula/)
+- [Privacy policy](https://www.anitian.com/privacy-policy/)
+- [GitHub](https://github.com/anitianinc)
+
+## API Evangelist rating
+
+**Kin Score 24.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 39.5 |
+
+**Agent readiness 2.5** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 29.4** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/anitian/](https://apis.io/providers/anitian/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Anitian: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/anitian/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
